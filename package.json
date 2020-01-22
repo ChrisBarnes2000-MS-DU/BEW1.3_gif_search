@@ -1,0 +1,22 @@
+{
+  "name": "gif-search",
+  "version": "1.0.0",
+  "description": "grab gifs from tenor api and display via templates",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChrisBarnes7404/BEW1.3_gif_search.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChrisBarnes7404/BEW1.3_gif_search/issues"
+  },
+  "homepage": "https://github.com/ChrisBarnes7404/BEW1.3_gif_search#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
