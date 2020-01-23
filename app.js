@@ -1,5 +1,6 @@
 // Require Libraries
 const express = require('express');
+const fetch = require('node-fetch');
 const Tenor = require("tenorjs").client({
     // Replace with your own key
     "Key": process.env.APIKEY, // https://tenor.com/developer/keyregistration
@@ -24,20 +25,29 @@ app.get('/', (req, res) => {
         term = req.query.term
     }
     // Tenor.search.Query("SEARCH KEYWORD HERE", "LIMIT HERE")
-    Tenor.Search.Query(term, "10")
-        .then(response => {
-            // store the gifs we get back from the search
-            const gifs = response;
-            // pass the gifs as an object into the home page
-            res.render('home', { gifs })
-        }).catch(console.error);
+    // Tenor.Search.Query(term, "10")
+    //     .then(response => {
+    //         // store the gifs we get back from the search
+    //         const gifs = response;
+    //         // pass the gifs as an object into the home page
+    //         res.render('home', { gifs })
+    //     }).catch(console.error);
+    get_json(res)
 })
 
-// app.get('/', (req, res) => {
-//     const gifUrl = 'https://media1.tenor.com/images/561c988433b8d71d378c9ccb4b719b6c/tenor.gif?itemid=10058245'
-//     // render the hello-gif view, passing the gifUrl into the view to be displayed
-//     res.render('hello-gif', { gifUrl })
-// });
+async function get_json(res) {
+    try {
+        const response = await fetch(`https://api.tenor.com/v1/search?q=${term}&key=${process.env.APIKEY}&limit=8`)
+        const r = await response.json()
+        let gifs = []
+        for (let i = 0; i < r.results.length; i++) {
+            gifs.push(r.results[i])
+        }
+        res.render('home', { gifs })
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 app.get('/greetings/:name', (req, res) => {
     // grab the name from the path provided
